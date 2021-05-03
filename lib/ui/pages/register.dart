@@ -14,6 +14,7 @@ class _RegisterState extends State<Register> {
   final ctrlPass = TextEditingController();
 
   bool passInvisible = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +28,10 @@ class _RegisterState extends State<Register> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.all(10),
         child: Stack(
           children: [
             ListView(
+              padding: EdgeInsets.all(10),
               children: [
                 Form(
                   key: _formKey,
@@ -139,15 +140,34 @@ class _RegisterState extends State<Register> {
                         height: 10,
                       ),
                       ElevatedButton.icon(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            //Continue to the next stage
-                            // Navigator.pushReplacementNamed(
-                            //     context,
-                            //     MainMenu
-                            //         .routeName); //you can't return to login page
-                            // Navigator.pushNamed(
-                            //     context, MainMenu.routeName); //you can return to login page , THERE IS back button
+                            setState(() {
+                              isLoading = true;
+                            });
+                            Users user = new Users(
+                                "",
+                                ctrlName.text,
+                                ctrlPhone.text,
+                                ctrlEmail.text,
+                                ctrlPass.text,
+                                "",
+                                "");
+                            await AuthServices.signUp(user).then((value) {
+                              if (value == "Success") {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ActivityServices.showToast(value, Colors.green);
+                                Navigator.pushReplacementNamed(
+                                    context, Login.routeName);
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ActivityServices.showToast(value, Colors.red);
+                              }
+                            });
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Please fill all the fields correctly!",
@@ -181,6 +201,7 @@ class _RegisterState extends State<Register> {
                 )
               ],
             ),
+            isLoading == true ? ActivityServices.loadings() : Container()
           ],
         ),
       ),

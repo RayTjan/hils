@@ -11,6 +11,7 @@ class _LoginState extends State<Login> {
   final ctrlEmail = TextEditingController();
   final ctrlPass = TextEditingController();
   bool passInvisible = true;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,15 +92,30 @@ class _LoginState extends State<Login> {
                         height: 10,
                       ),
                       ElevatedButton.icon(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            //Continue to the next stage
-                            Navigator.pushReplacementNamed(
-                                context,
-                                MainMenu
-                                    .routeName); //you can't return to login page
-                            // Navigator.pushNamed(
-                            //     context, MainMenu.routeName); //you can return to login page , THERE IS back button
+                            setState(() {
+                              isLoading = true;
+                            });
+                            await AuthServices.signIn(
+                                    ctrlEmail.text, ctrlPass.text)
+                                .then((value) {
+                              if (value == "Success") {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ActivityServices.showToast(
+                                    "Login success", Colors.greenAccent);
+                                Navigator.pushReplacementNamed(
+                                    context, MainMenu.routeName);
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ActivityServices.showToast(
+                                    value, Colors.redAccent);
+                              }
+                            });
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Please fill all the fields correctly!",
