@@ -1,8 +1,21 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:hils/shared/shared.dart';
 import 'package:hils/ui/pages/pages.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-void main() {
+void enablePlatformOverrideForDesktop() {
+  if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
+
+void main() async {
+  enablePlatformOverrideForDesktop();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -12,17 +25,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Advanced MAD ToyBox",
+      title: "Advanced MAD",
       theme: MyTheme.lightTheme(),
       initialRoute: '/',
       routes: {
-        '/': (context) => Login(),
-        // '/': (context) => SplashScreen(),
+        '/': (context) => Splash(),
+        Splash.routeName: (context) => Splash(),
         Login.routeName: (context) => Login(),
-        Register.routeName: (context) => Register(),
         MainMenu.routeName: (context) => MainMenu(),
-        // 'history':(context =>History(),
-        //History.routeName: (context) => History(),
+        Register.routeName: (context) => Register(),
       },
     );
   }
