@@ -158,7 +158,8 @@ class _RegisterState extends State<Register> {
                                 setState(() {
                                   isLoading = false;
                                 });
-                                ActivityServices.showToast(value, Colors.green);
+                                ActivityServices.showToast(
+                                    "Register success", Colors.green);
                                 Navigator.pushReplacementNamed(
                                     context, Login.routeName);
                               } else {

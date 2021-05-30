@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:io';
-
 import 'package:hils/models/models.dart';
 import 'package:hils/services/services.dart';
 import 'package:hils/ui/widgets/widgets.dart';
@@ -10,6 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dio/dio.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'dart:async';
+
 part 'login.dart';
 part 'mainmenu.dart';
 part 'register.dart';
@@ -17,3 +19,6 @@ part 'adddata.dart';
 part 'listdata.dart';
 part 'myaccount.dart';
 part 'splash.dart';
+part 'record.dart';
+part 'test.dart';
+part 'timer.dart';

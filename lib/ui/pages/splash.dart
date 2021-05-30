@@ -7,7 +7,6 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -24,8 +23,9 @@ class _SplashState extends State<Splash> {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser != null) {
       Navigator.pushReplacementNamed(context, MainMenu.routeName);
-      ActivityServices.showToast("Welcome Back "+auth.currentUser.email, Colors.blue);
-    } else{
+      ActivityServices.showToast(
+          "Welcome Back " + auth.currentUser.email, Colors.blue);
+    } else {
       Navigator.pushReplacementNamed(context, Login.routeName);
     }
   }

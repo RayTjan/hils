@@ -10,8 +10,8 @@ class _MainMenuState extends State<MainMenu> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    AddData(),
-    ListData(),
+    TimerCount(),
+    Testing(),
     MyAccount(),
   ];
 
@@ -40,12 +40,13 @@ class _MainMenuState extends State<MainMenu> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'List Data',
+            label: 'Record',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
             label: 'My Account',
           ),
+          //PROBLEM : if i add another bottomNav it'll turn white
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

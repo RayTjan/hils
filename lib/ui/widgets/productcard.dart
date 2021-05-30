@@ -1,7 +1,6 @@
 part of 'widgets.dart';
 
 class ProductCard extends StatefulWidget {
-
   final Products products;
   ProductCard({this.products});
 
@@ -20,9 +19,7 @@ class _ProductCardState extends State<ProductCard> {
 
     return Card(
       elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.0)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
       margin: EdgeInsets.all(8),
       child: Container(
         padding: EdgeInsets.all(8),
@@ -32,7 +29,8 @@ class _ProductCardState extends State<ProductCard> {
             backgroundImage: NetworkImage(products.productImage),
           ),
           title: Text(
-            products.productName,style: TextStyle(
+            products.productName,
+            style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.normal,
             ),
@@ -41,10 +39,7 @@ class _ProductCardState extends State<ProductCard> {
           ),
           subtitle: Text(
             ActivityServices.toIDR(products.productPrice),
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.normal
-            ),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
             maxLines: 1,
             softWrap: true,
           ),
@@ -53,44 +48,47 @@ class _ProductCardState extends State<ProductCard> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: Icon(CupertinoIcons.trash_circle),
+                icon: Icon(CupertinoIcons.settings),
                 onPressed: () {
                   showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext ctx) {
-                      return Container(
-                        height: 120,
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(CupertinoIcons.eye_fill),
-                              label: Text("Show Data"),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(CupertinoIcons.pencil),
-                              label: Text("Edit Data"),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () async {
-                                bool result = await ProductServices.deleteProduct(products.productId);
-                                if (result) {
-                                  ActivityServices.showToast("Delete data success", Colors.green);
-                                } else {
-                                  ActivityServices.showToast("Delete data failed", Colors.red);
-                                }
-                              },
-                              icon: Icon(CupertinoIcons.delete),
-                              label: Text("Data"),
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                  );
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return Container(
+                          height: 120,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {},
+                                icon: Icon(CupertinoIcons.eye_fill),
+                                label: Text("Show Data"),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {},
+                                icon: Icon(CupertinoIcons.pencil),
+                                label: Text("Edit Data"),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () async {
+                                  bool result =
+                                      await ProductServices.deleteProduct(
+                                          products.productId);
+                                  if (result) {
+                                    ActivityServices.showToast(
+                                        "Delete data success", Colors.green);
+                                  } else {
+                                    ActivityServices.showToast(
+                                        "Delete data failed", Colors.red);
+                                  }
+                                },
+                                icon: Icon(CupertinoIcons.delete),
+                                label: Text("Data"),
+                              )
+                            ],
+                          ),
+                        );
+                      });
                 },
               ),
             ],
