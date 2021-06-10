@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:hils/models/models.dart';
 import 'package:hils/services/services.dart';
+import 'package:hils/shared/shared.dart';
 import 'package:hils/ui/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
@@ -10,7 +11,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'dart:async';
+import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 
 part 'login.dart';
 part 'mainmenu.dart';
@@ -20,5 +24,7 @@ part 'listdata.dart';
 part 'myaccount.dart';
 part 'splash.dart';
 part 'record.dart';
-part 'test.dart';
+part 'diet.dart';
+part 'test2.dart';
+part 'calendar.dart';
 part 'timer.dart';

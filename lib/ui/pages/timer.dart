@@ -12,38 +12,45 @@ class _TimerCountState extends State<TimerCount> {
   double percent = 0;
   static int timeInMinut = 3;
   int timeInSec = timeInMinut * 60;
-
+  int time = 0;
   Timer timer;
   _cancelTimer() {
-    print("Cancelled");
+    print({"CANCEL"});
     timer.cancel();
   }
 
   _startTimer() {
     print("STARTING");
     timeInMinut = minute;
-    int time = timeInMinut * 60;
+    time = timeInMinut * 60;
     double secPercent = (time / 100);
-    new Timer.periodic(Duration(seconds: 1), (Timer t) {
+    timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() {
         if (time > 0) {
           print("TIME :" + time.toString());
           time--;
           if (time % 60 == 0) {
+            //timeInMinut--;
             timeInMinut--;
+            print("one minute passed");
+            print(timeInMinut);
+            print("HELLOO?");
           }
-          if (time % secPercent == 0) {
+          if (time % secPercent != 0) {
             if (percent < 1) {
               percent += 0.01;
             } else {
               percent = 1;
             }
+            print("Tarnation");
             print(percent);
           } else {
-            percent = 0;
-            timeInMinut = minute;
-            timer.cancel();
+            print("Whateven");
           }
+        } else {
+          percent = 0;
+          timeInMinut = minute;
+          timer.cancel();
         }
       });
     });
@@ -65,7 +72,7 @@ class _TimerCountState extends State<TimerCount> {
             children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(top: 18.0),
-                  child: Text("Pomodoro Clock",
+                  child: Text("Clock",
                       style: TextStyle(color: Colors.white, fontSize: 20.0))),
               Expanded(
                 child: CircularPercentIndicator(
@@ -104,7 +111,7 @@ class _TimerCountState extends State<TimerCount> {
                               child: Column(
                             children: <Widget>[
                               Text(
-                                "Study Timer",
+                                "Cook Timer",
                                 style: TextStyle(
                                   fontSize: 20.0,
                                 ),
@@ -122,7 +129,7 @@ class _TimerCountState extends State<TimerCount> {
                               child: Column(
                             children: <Widget>[
                               Text(
-                                "Pause Timer",
+                                "Rest Timer",
                                 style: TextStyle(
                                   fontSize: 20.0,
                                 ),

@@ -12,9 +12,54 @@ class _RegisterState extends State<Register> {
   final ctrlPhone = TextEditingController();
   final ctrlEmail = TextEditingController();
   final ctrlPass = TextEditingController();
-
   bool passInvisible = true;
   bool isLoading = false;
+  PickedFile imageFile;
+  final ImagePicker imagePicker = ImagePicker();
+
+  Future chooseFile(String type) async {
+    ImageSource imgSrc;
+    if (type == "camera") {
+      imgSrc = ImageSource.camera;
+    } else {
+      imgSrc = ImageSource.gallery;
+    }
+
+    final selectedImage = await imagePicker.getImage(
+      source: imgSrc,
+      imageQuality: 50,
+    );
+    setState(() {
+      imageFile = selectedImage;
+    });
+  }
+
+  void showFileDialog(BuildContext ctx) {
+    showDialog(
+        context: ctx,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text("Confirmation"),
+            content: Text("Pick image from:"),
+            actions: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  chooseFile("camera");
+                },
+                icon: Icon(Icons.camera_alt),
+                label: Text("Camera"),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  chooseFile("gallery");
+                },
+                icon: Icon(Icons.photo_album_rounded),
+                label: Text("Gallery"),
+              )
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +82,46 @@ class _RegisterState extends State<Register> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      Image.asset(
-                        "assets/images/parrot.jpg",
-                        height: 275,
-                      ),
+                      imageFile == null
+                          ? Row(
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () async {
+                                    // chooseFile();
+                                    showFileDialog(context);
+                                  },
+                                  label: Text("Ambil Foto"),
+                                  icon: Icon(Icons.photo_album),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Text(
+                                  "File tidak ditemukan",
+                                  style: TextStyle(color: Colors.red),
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () async {
+                                    // chooseFile();
+                                    showFileDialog(context);
+                                  },
+                                  label: Text("Ambil Foto"),
+                                  icon: Icon(Icons.photo_album),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Semantics(
+                                    child: Image.file(
+                                  File(imageFile.path),
+                                  width: 100,
+                                ))
+                              ],
+                            ),
                       SizedBox(
                         height: 24,
                       ),
@@ -65,30 +146,6 @@ class _RegisterState extends State<Register> {
                         height: 10,
                       ),
                       TextFormField(
-                        controller: ctrlPhone,
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                          labelText: 'Phone',
-                          prefixIcon: Icon(Icons.call),
-                          border: OutlineInputBorder(),
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value.isNotEmpty) {
-                            if (value.length < 7 || value.length > 14) {
-                              return 'Phone Number is not valid';
-                            } else {
-                              return null;
-                            }
-                          } else {
-                            return "Please fill the field";
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
                         controller: ctrlEmail,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -102,7 +159,7 @@ class _RegisterState extends State<Register> {
                             if (EmailValidator.validate(value)) {
                               return null;
                             } else {
-                              return "Please a valid email";
+                              return "Please give a valid email";
                             }
                           } else {
                             return "Please fill the field";
@@ -148,12 +205,14 @@ class _RegisterState extends State<Register> {
                             Users user = new Users(
                                 "",
                                 ctrlName.text,
-                                ctrlPhone.text,
                                 ctrlEmail.text,
                                 ctrlPass.text,
+                                Glovar.guestPic,
+                                "",
                                 "",
                                 "");
-                            await AuthServices.signUp(user).then((value) {
+                            await AuthServices.signUp(user, imageFile)
+                                .then((value) {
                               if (value == "Success") {
                                 setState(() {
                                   isLoading = false;

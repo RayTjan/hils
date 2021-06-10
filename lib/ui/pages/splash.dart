@@ -35,8 +35,9 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child: Text(
-          "SPLASH SCREEN",
+        child: Image.asset(
+          "assets/images/logo.png",
+          height: 275,
         ),
       ),
     );

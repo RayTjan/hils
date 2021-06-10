@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       Image.asset(
-                        "assets/images/parrot.jpg",
+                        "assets/images/loogWhite.png",
                         height: 275,
                       ),
                       SizedBox(
@@ -100,7 +100,7 @@ class _LoginState extends State<Login> {
                             await AuthServices.signIn(
                                     ctrlEmail.text, ctrlPass.text)
                                 .then((value) {
-                              if (value == "success") {
+                              if (value == "Success") {
                                 setState(() {
                                   isLoading = false;
                                 });
