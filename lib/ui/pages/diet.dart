@@ -12,9 +12,14 @@ class _DietState extends State<Diet> {
   int day = int.parse(ActivityServices.dateNow().substring(8, 10));
   int dateLoc = ActivityServices.getDateLocation();
 
-  @override
-  void initState() async {
-    super.initState();
+  // @override
+  // void initState() async {
+  //   await SpoonServices.searchFood("burger").then((foods) => {
+  //         foodList = foods,
+  //       });
+  // }
+
+  void getFoods() async {
     await SpoonServices.searchFood("burger").then((foods) => {
           foodList = foods,
         });
@@ -22,7 +27,11 @@ class _DietState extends State<Diet> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getFoods();
+    });
     return Scaffold(
+        //error when you call the API, the page just doesnt load for some reaosn
         appBar: AppBar(
           title: Text(
             'List Data',
@@ -139,24 +148,38 @@ class _DietState extends State<Diet> {
                       ),
                     ),
                     SizedBox(height: 24),
-                    Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Color(0xff1542bf), Color(0xff51a8ff)],
-                                begin: FractionalOffset(0.5, 1))),
-                        width: double.infinity,
-                        child: ListView.builder(
-                          itemCount: foodList.length,
-                          itemBuilder: (BuildContext ctx, int index) {
-                            return FoodCard(food: foodList[index]);
+                    Expanded(
+                      child: SizedBox(
+                        height: 200.0,
+                        child: FutureBuilder<List<Food>>(
+                          future: SpoonServices.searchFood("burger"),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              List<Food> foods = snapshot.data;
+                              return _foodListView(foods);
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            }
+                            return CircularProgressIndicator();
                           },
-                        )),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ],
         ));
+  }
+
+  ListView _foodListView(foods) {
+    return ListView.builder(
+        itemCount: foods.length,
+        padding: const EdgeInsets.only(top: 10.0),
+        itemBuilder: (context, index) {
+          return FoodCard(food: foods[index]);
+        });
   }
 
   Container buildDateColumn(String weekDay, int date, bool isActive) {

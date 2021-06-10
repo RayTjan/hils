@@ -10,9 +10,8 @@ class TimerCount extends StatefulWidget {
 class _TimerCountState extends State<TimerCount> {
   int minute = 3;
   double percent = 1;
-  static int timeInMinut = 3;
-  static String displayTime = timeInMinut.toString() + "m";
-  int timeInSec = timeInMinut * 60;
+  int timeInMinut = 3;
+  String displayTime = "3m";
   int time = 0;
   Timer timer;
   bool btnState = false;
@@ -27,10 +26,13 @@ class _TimerCountState extends State<TimerCount> {
   _changeTimer(bool direction) {
     if (direction) {
       timeInMinut++;
+      minute++;
       displayTime = timeInMinut.toString() + "m";
     } else {
-      if (timeInMinut >= 1) {
+      if (timeInMinut > 1) {
         timeInMinut--;
+        minute--;
+
         displayTime = timeInMinut.toString() + "m";
       }
     }
@@ -123,33 +125,6 @@ class _TimerCountState extends State<TimerCount> {
                     padding:
                         EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                     child: Column(children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              btnState ? _cancelTimer() : _startTimer();
-                              if (btnState == true) {
-                                btnState = false;
-                              } else {
-                                btnState = true;
-                              }
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xff70b84d),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 100, right: 100, top: 20, bottom: 20),
-                            child: Icon(
-                              btnState ? Icons.stop : Icons.play_arrow,
-                              size: 50.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
                       Expanded(
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -191,6 +166,33 @@ class _TimerCountState extends State<TimerCount> {
                           ),
                         ],
                       )),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              btnState ? _cancelTimer() : _startTimer();
+                              if (btnState == true) {
+                                btnState = false;
+                              } else {
+                                btnState = true;
+                              }
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff70b84d),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 100, right: 100, top: 20, bottom: 20),
+                            child: Icon(
+                              btnState ? Icons.stop : Icons.play_arrow,
+                              size: 50.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ]),
                   ),
                 ),

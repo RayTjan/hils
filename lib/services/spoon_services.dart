@@ -3,23 +3,21 @@ part of 'services.dart';
 class SpoonServices {
   static Future<List<Food>> searchFood(String search) async {
     List<Food> foods = [];
-    for (int i = 1; i <= 2; i++) {
-      String apiURL = Glovar.baseUrl +
-          "/food/menuItems/search?query= " +
-          search +
-          "&apiKey=" +
-          Glovar.apiKey;
+    String apiURL = Glovar.baseUrl +
+        "/food/menuItems/search?query= " +
+        search +
+        "&apiKey=" +
+        Glovar.apiKey;
 
-      var apiResult = await http.get(Uri.parse(apiURL));
-      var jsonObject = json.decode(apiResult.body);
+    var apiResult = await http.get(Uri.parse(apiURL));
+    var jsonObject = json.decode(apiResult.body);
+    print(jsonObject);
+    List<dynamic> listFoods = (jsonObject as Map<String, dynamic>)['menuItems'];
+    print(listFoods);
+    for (int i = 0; i < listFoods.length; i++)
+      foods.add(Food.createFoods(
+          (await getFoodDetails(listFoods[i]['id'].toString()))));
 
-      List<dynamic> listFoods =
-          (jsonObject as Map<String, dynamic>)['menuItems'];
-      print(listFoods);
-      for (int i = 0; i < listFoods.length; i++)
-        foods.add(Food.createFoods(
-            (await getFoodDetails(listFoods[i]['id'].toString()))));
-    }
     return foods;
   }
 

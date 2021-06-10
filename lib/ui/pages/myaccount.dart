@@ -16,7 +16,7 @@ class _MyAccountState extends State<MyAccount> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
-        backgroundColor: Color(0xFFf96060),
+        backgroundColor: Colors.green[800],
         automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: true,
@@ -110,9 +110,7 @@ class _MyAccountState extends State<MyAccount> {
                           icon: Icon(Icons.login_rounded),
                           label: Text("Logout"),
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange[400],
-                              alignment: Alignment.bottomCenter,
-                              elevation: 0),
+                              primary: Colors.green[800], elevation: 2),
                         ),
                       ],
                     );
