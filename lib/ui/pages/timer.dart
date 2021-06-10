@@ -9,47 +9,66 @@ class TimerCount extends StatefulWidget {
 
 class _TimerCountState extends State<TimerCount> {
   int minute = 3;
-  double percent = 0;
+  double percent = 1;
   static int timeInMinut = 3;
+  static String displayTime = timeInMinut.toString() + "m";
   int timeInSec = timeInMinut * 60;
   int time = 0;
   Timer timer;
   _cancelTimer() {
     print({"CANCEL"});
+    percent = 1;
+    timeInMinut = minute;
+    displayTime = timeInMinut.toString() + "m";
     timer.cancel();
+  }
+
+  _changeTimer(bool direction) {
+    if (direction) {
+      timeInMinut++;
+      displayTime = timeInMinut.toString() + "m";
+    } else {
+      if (timeInMinut >= 1) {
+        timeInMinut--;
+        displayTime = timeInMinut.toString() + "m";
+      }
+    }
   }
 
   _startTimer() {
     print("STARTING");
     timeInMinut = minute;
+    displayTime = minute.toString() + "m";
     time = timeInMinut * 60;
-    double secPercent = (time / 100);
+    int secPercent = time;
     timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() {
         if (time > 0) {
           print("TIME :" + time.toString());
           time--;
-          if (time % 60 == 0) {
-            //timeInMinut--;
-            timeInMinut--;
-            print("one minute passed");
-            print(timeInMinut);
-            print("HELLOO?");
-          }
-          if (time % secPercent != 0) {
-            if (percent < 1) {
-              percent += 0.01;
-            } else {
-              percent = 1;
+          if (timeInMinut > 1) {
+            if (time % 60 == 0) {
+              //timeInMinut--;
+              timeInMinut--;
+              displayTime = timeInMinut.toString() + "m";
             }
-            print("Tarnation");
-            print(percent);
           } else {
-            print("Whateven");
+            displayTime = time.toString() + "s";
+            print("update");
+          }
+          if ((time * 100) % secPercent == 0) {
+            if (percent > 0) {
+              percent -= 0.01;
+            } else {
+              percent = 0;
+            }
+            print("Tarnation" + percent.toString());
+            print(percent);
           }
         } else {
-          percent = 0;
+          percent = 1;
           timeInMinut = minute;
+          displayTime = minute.toString() + "m";
           timer.cancel();
         }
       });
@@ -63,7 +82,7 @@ class _TimerCountState extends State<TimerCount> {
         body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Color(0xff1542bf), Color(0xff51a8ff)],
+                  colors: [Color(0xff59953c), Color(0xff70b84d)],
                   begin: FractionalOffset(0.5, 1))),
           width: double.infinity,
           child: Column(
@@ -71,9 +90,8 @@ class _TimerCountState extends State<TimerCount> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(top: 18.0),
-                  child: Text("Clock",
-                      style: TextStyle(color: Colors.white, fontSize: 20.0))),
+                padding: EdgeInsets.only(top: 50.0),
+              ),
               Expanded(
                 child: CircularPercentIndicator(
                   circularStrokeCap: CircularStrokeCap.round,
@@ -84,7 +102,7 @@ class _TimerCountState extends State<TimerCount> {
                   lineWidth: 20.0,
                   progressColor: Colors.white,
                   center: Text(
-                    "$timeInMinut",
+                    "$displayTime",
                     style: TextStyle(color: Colors.white, fontSize: 80.0),
                   ),
                 ),
@@ -107,42 +125,38 @@ class _TimerCountState extends State<TimerCount> {
                       Expanded(
                           child: Row(
                         children: <Widget>[
-                          Expanded(
-                              child: Column(
-                            children: <Widget>[
-                              Text(
-                                "Cook Timer",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Text(
-                                "25",
-                                style: TextStyle(fontSize: 60.0),
-                              ),
-                            ],
-                          )),
-                          Expanded(
-                              child: Column(
-                            children: <Widget>[
-                              Text(
-                                "Rest Timer",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Text(
-                                "5",
-                                style: TextStyle(fontSize: 60.0),
-                              ),
-                            ],
-                          ))
+                          RawMaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                _changeTimer(true);
+                              });
+                            },
+                            elevation: 2.0,
+                            fillColor: Color(0xff70b84d),
+                            child: Icon(
+                              Icons.arrow_drop_up_outlined,
+                              size: 75.0,
+                              color: Colors.white,
+                            ),
+                            padding: EdgeInsets.all(15.0),
+                            shape: CircleBorder(),
+                          ),
+                          RawMaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                _changeTimer(false);
+                              });
+                            },
+                            elevation: 2.0,
+                            fillColor: Color(0xff70b84d),
+                            child: Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 75.0,
+                              color: Colors.white,
+                            ),
+                            padding: EdgeInsets.all(15.0),
+                            shape: CircleBorder(),
+                          ),
                         ],
                       )),
                       Padding(
@@ -152,7 +166,7 @@ class _TimerCountState extends State<TimerCount> {
                           child: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: Text(
-                              "Start Studying",
+                              "Start",
                               style: TextStyle(
                                   color: Colors.white, fontSize: 22.0),
                             ),
@@ -182,5 +196,13 @@ class _TimerCountState extends State<TimerCount> {
         ),
       ),
     );
+  }
+
+  int getTime() {
+    if (timeInMinut == 1) {
+      return time;
+    } else {
+      return timeInMinut;
+    }
   }
 }

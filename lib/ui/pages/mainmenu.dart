@@ -35,16 +35,16 @@ class _MainMenuState extends State<MainMenu> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.note_add_rounded),
-            label: 'Add Data',
+            icon: Icon(Icons.timer),
+            label: 'Timer',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'Record',
+            label: 'Diet',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
-            label: 'My Account',
+            label: 'Account',
           ),
           //PROBLEM : if i add another bottomNav it'll turn white
         ],
