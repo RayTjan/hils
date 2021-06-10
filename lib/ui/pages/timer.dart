@@ -15,6 +15,7 @@ class _TimerCountState extends State<TimerCount> {
   int timeInSec = timeInMinut * 60;
   int time = 0;
   Timer timer;
+  bool btnState = false;
   _cancelTimer() {
     print({"CANCEL"});
     percent = 1;
@@ -122,8 +123,36 @@ class _TimerCountState extends State<TimerCount> {
                     padding:
                         EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                     child: Column(children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              btnState ? _cancelTimer() : _startTimer();
+                              if (btnState == true) {
+                                btnState = false;
+                              } else {
+                                btnState = true;
+                              }
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff70b84d),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 100, right: 100, top: 20, bottom: 20),
+                            child: Icon(
+                              btnState ? Icons.stop : Icons.play_arrow,
+                              size: 50.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                       Expanded(
                           child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           RawMaterialButton(
                             onPressed: () {
@@ -135,11 +164,14 @@ class _TimerCountState extends State<TimerCount> {
                             fillColor: Color(0xff70b84d),
                             child: Icon(
                               Icons.arrow_drop_up_outlined,
-                              size: 75.0,
+                              size: 50.0,
                               color: Colors.white,
                             ),
                             padding: EdgeInsets.all(15.0),
                             shape: CircleBorder(),
+                          ),
+                          SizedBox(
+                            width: 80,
                           ),
                           RawMaterialButton(
                             onPressed: () {
@@ -151,7 +183,7 @@ class _TimerCountState extends State<TimerCount> {
                             fillColor: Color(0xff70b84d),
                             child: Icon(
                               Icons.arrow_drop_down_outlined,
-                              size: 75.0,
+                              size: 50.0,
                               color: Colors.white,
                             ),
                             padding: EdgeInsets.all(15.0),
@@ -159,34 +191,6 @@ class _TimerCountState extends State<TimerCount> {
                           ),
                         ],
                       )),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: ElevatedButton(
-                          onPressed: _startTimer,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              "Start",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 22.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: ElevatedButton(
-                          onPressed: _cancelTimer,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              "Stop",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 22.0),
-                            ),
-                          ),
-                        ),
-                      ),
                     ]),
                   ),
                 ),
