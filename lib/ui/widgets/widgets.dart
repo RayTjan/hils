@@ -5,3 +5,4 @@ import 'package:flutter/material.dart';
 
 part 'productcard.dart';
 part 'foodcard.dart';
+part 'dietcard.dart';

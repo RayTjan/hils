@@ -14,19 +14,27 @@ class _DietState extends State<Diet> {
   int day = int.parse(ActivityServices.dateNow().substring(8, 10));
   int dateLoc = ActivityServices.getDateLocation();
   String userName = AuthServices.getName();
+  String uid = FirebaseAuth.instance.currentUser.uid;
+  CollectionReference foodCollection =
+      FirebaseFirestore.instance.collection("DietPlan");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            searchBarUI(),
+            SizedBox(height: 100000),
             Stack(
               children: [
                 searchin
                     ? null
                     : Container(
                         padding: const EdgeInsets.only(top: 100.0),
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
                         alignment: Alignment.topCenter,
                         child: Column(
                           children: [
@@ -82,19 +90,66 @@ class _DietState extends State<Diet> {
                                 ],
                               ),
                             ),
-                            // HEYYEYAAEYAAAEYAEYAA
+                            Text("Diet History"),
 
-                            Image.asset(
-                              "assets/images/loogWhite.png",
-                              height: 275,
-                            ),
+                            // HEYYEYAAEYAAAEYAEYAA
+                            buildFoodList(),
                           ],
                         ),
                       ),
               ],
-            )
+            ),
+            // searchFood(),
           ],
         ));
+  }
+
+  Widget buildFoodList() {
+    print("what");
+
+    return Expanded(
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: foodCollection.where('User', isEqualTo: uid).snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text("Failed to load data!");
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ActivityServices.loadings();
+            }
+            print(snapshot.toString());
+
+            return new ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot doc) {
+                Food foods;
+                //cara 1
+                // if (doc.data()['addBy'] == FirebaseAuth.instance.currentUser.uid) {
+                foods = new Food(
+                  doc.data()['foodId'],
+                  doc.data()['Title'],
+                  doc.data()['Image'],
+                  doc.data()['Carbs'],
+                  doc.data()['CarbsUnit'],
+                  doc.data()['calories'],
+                  doc.data()['CaloriesUnit'],
+                  doc.data()['Fat'],
+                  doc.data()['FatUnit'],
+                  doc.data()['protein'],
+                  doc.data()['proteinUnit'],
+                );
+                // }
+                return DietCard(food: foods);
+              }).toList(),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   ListView _foodListView(foods) {
@@ -132,7 +187,7 @@ class _DietState extends State<Diet> {
     );
   }
 
-  Widget searchBarUI() {
+  Widget searchFood() {
     return FloatingSearchBar(
       hint: 'Search.....',
       openAxisAlignment: 0.0,
@@ -150,6 +205,7 @@ class _DietState extends State<Diet> {
       transitionDuration: Duration(milliseconds: 500),
       transition: CircularFloatingSearchBarTransition(),
       debounceDelay: Duration(milliseconds: 500),
+      clearQueryOnClose: true,
       actions: [
         FloatingSearchBarAction(
           showIfOpened: true,
@@ -167,9 +223,8 @@ class _DietState extends State<Diet> {
           child: Material(
             child: Expanded(
               child: SizedBox(
-                height: searchName != ""
-                    ? MediaQuery.of(context).size.height * 4 / 5
-                    : 0,
+                height:
+                    searchName != "" ? MediaQuery.of(context).size.height : 0,
                 child: FutureBuilder<List<Food>>(
                   future: SpoonServices.searchFood(searchName),
                   builder: (context, snapshot) {

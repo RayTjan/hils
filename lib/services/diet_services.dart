@@ -7,7 +7,6 @@ class DietServices {
   static CollectionReference dietCollection =
       FirebaseFirestore.instance.collection("DietPlan");
   static DocumentReference productDocument;
-
   //setup storage
   static Reference ref;
   static UploadTask uploadTask;
@@ -31,6 +30,7 @@ class DietServices {
       'proteinUnit': food.proteinUnit,
       'timeAdded': dateNow,
     });
+    ActivityServices.showToast("Food Added", Colors.green[800]);
     return true;
   }
 

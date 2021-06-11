@@ -1,13 +1,13 @@
 part of 'widgets.dart';
 
-class FoodCard extends StatefulWidget {
+class DietCard extends StatefulWidget {
   final Food food;
-  FoodCard({this.food});
+  DietCard({this.food});
   @override
-  _FoodCardState createState() => _FoodCardState();
+  _DietCardState createState() => _DietCardState();
 }
 
-class _FoodCardState extends State<FoodCard> {
+class _DietCardState extends State<DietCard> {
   @override
   Widget build(BuildContext context) {
     Food food = widget.food;
@@ -21,7 +21,6 @@ class _FoodCardState extends State<FoodCard> {
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
       child: Container(
-        padding: EdgeInsets.all(8),
         child: ListTile(
           leading: CircleAvatar(
             radius: 24.0,
@@ -42,16 +41,6 @@ class _FoodCardState extends State<FoodCard> {
             maxLines: 1,
             softWrap: true,
           ),
-          trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    icon: Icon(CupertinoIcons.add_circled),
-                    onPressed: () {
-                      DietServices.addFood(food);
-                    })
-              ]),
         ),
       ),
     ));
