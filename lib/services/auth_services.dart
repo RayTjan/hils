@@ -40,8 +40,6 @@ class AuthServices extends ChangeNotifier {
       msg = onError;
     });
 
-    auth.signOut();
-
     if (userCollection.doc != null) {
       ref = FirebaseStorage.instance.ref().child("images").child(uid + ".png");
       uploadTask = ref.putFile(File(imgFile.path));
@@ -50,11 +48,13 @@ class AuthServices extends ChangeNotifier {
             (value) => imgUrl = value,
           ));
 
-      userCollection.doc(userDoc.id).update({
-        'productId': userDoc.id,
+      userCollection.doc(uid).update({
+        'productId': uid,
         'productImage': imgUrl,
       });
     }
+    auth.signOut();
+
     return msg;
   }
 

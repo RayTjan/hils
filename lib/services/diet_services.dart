@@ -46,25 +46,32 @@ class DietServices {
     return hsl;
   }
 
-  static List getSummary() {
-    int carb = 0;
-    int calory = 0;
-    int fat = 0;
-    int protein = 0;
-    FirebaseFirestore.instance.collection('DietPlan').get().then((value) => {
-          if (value.docs.length == 0)
-            {print("Nothing")}
-          else
-            {
-              value.docs.forEach((element) {
-                carb += int.parse(element.data()['Carbs']);
-                calory += int.parse(element.data()['calories']);
-                fat += int.parse(element.data()['Fat']);
-                protein += int.parse(element.data()['protein']);
-              })
-            }
-        });
-
+  static Future<List> getSummary() async {
+    double carb = 0;
+    double calory = 0;
+    double fat = 0;
+    double protein = 0;
+    await FirebaseFirestore.instance
+        .collection('DietPlan')
+        .get()
+        .then((value) => {
+              if (value.docs.length == 0)
+                {print("Nothing")}
+              else
+                {
+                  value.docs.forEach((element) {
+                    carb += double.parse(element.data()['Carbs']);
+                    calory += double.parse(element.data()['calories']);
+                    fat += double.parse(element.data()['Fat']);
+                    protein += double.parse(element.data()['protein']);
+                  })
+                }
+            });
+    print(carb);
+    print(calory);
+    print(fat);
+    print(protein);
+    print("DUNZO");
     return [carb, calory, fat, protein];
   }
 }

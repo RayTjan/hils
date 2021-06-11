@@ -86,7 +86,7 @@ class _RegisterState extends State<Register> {
                         height: 50,
                       ),
                       Text(
-                        "LOGIN",
+                        "REGISTER",
                         style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.normal,
@@ -103,7 +103,7 @@ class _RegisterState extends State<Register> {
                                     // chooseFile();
                                     showFileDialog(context);
                                   },
-                                  label: Text("Ambil Foto"),
+                                  label: Text("Take Photo"),
                                   icon: Icon(Icons.photo_album),
                                 ),
                                 SizedBox(

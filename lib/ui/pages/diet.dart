@@ -138,6 +138,15 @@ class _DietState extends State<Diet> {
             )));
   }
 
+  ListView _foodListView(foods) {
+    return ListView.builder(
+        itemCount: foods.length,
+        padding: const EdgeInsets.only(top: 10.0),
+        itemBuilder: (context, index) {
+          return FoodCard(food: foods[index]);
+        });
+  }
+
   Widget buildFoodList() {
     print("what");
 
@@ -245,24 +254,24 @@ class _DietState extends State<Diet> {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Material(
-            child: Expanded(child: null
-                // SizedBox(
-                //   height:
-                //       searchName != "" ? MediaQuery.of(context).size.height : 0,
-                //   child: FutureBuilder<List<Food>>(
-                //     future: SpoonServices.searchFood(searchName),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasData) {
-                //         List<Food> foods = snapshot.data;
-                //         return _foodListView(foods);
-                //       } else if (snapshot.hasError) {
-                //         return Text("${snapshot.error}");
-                //       }
-                //       return Text("Loading...");
-                //     },
-                //   ),
-                // ),
+            child: Expanded(
+              child: SizedBox(
+                height:
+                    searchName != "" ? MediaQuery.of(context).size.height : 0,
+                child: FutureBuilder<List<Food>>(
+                  future: SpoonServices.searchFood(searchName),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Food> foods = snapshot.data;
+                      return _foodListView(foods);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return Text("Loading...");
+                  },
                 ),
+              ),
+            ),
           ),
         );
       },

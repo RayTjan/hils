@@ -7,14 +7,22 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccountState extends State<MyAccount> {
   bool isLoading = false;
-  List sum = DietServices.getSummary();
+  List sum = [0, 0, 0, 0];
 
   String uid = FirebaseAuth.instance.currentUser.uid;
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
+  void updateSummary() {
+    setState(() {
+      DietServices.getSummary().then((value) => {sum = value});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      updateSummary();
+    });
     return Scaffold(
       body: Stack(
         children: [
@@ -77,7 +85,10 @@ class _MyAccountState extends State<MyAccount> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
-                                            image: AssetImage(Glovar.guestPic),
+                                            image: users.imagePath ==
+                                                    "assets/images/defaultUser.jpg"
+                                                ? NetworkImage(users.imagePath)
+                                                : AssetImage(Glovar.guestPic),
                                             fit: BoxFit.fill),
                                       ),
                                     ),
@@ -153,7 +164,7 @@ class _MyAccountState extends State<MyAccount> {
                                                         "mg",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                         color:
@@ -166,7 +177,7 @@ class _MyAccountState extends State<MyAccount> {
                                                         sum[1].toString(),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                         color:
@@ -180,7 +191,7 @@ class _MyAccountState extends State<MyAccount> {
                                                         "kcal",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                         color:
@@ -194,7 +205,7 @@ class _MyAccountState extends State<MyAccount> {
                                                         "g",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                         color:
