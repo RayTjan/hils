@@ -66,7 +66,7 @@ class _MyAccountState extends State<MyAccount> {
                             Padding(
                               padding: EdgeInsets.all(0),
                               child: Text(
-                                "PROFILE",
+                                "ACCOUNT",
                                 style: TextStyle(
                                     fontSize: 40,
                                     fontWeight: FontWeight.normal,
