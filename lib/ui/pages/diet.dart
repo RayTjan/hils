@@ -35,9 +35,19 @@ class _DietState extends State<Diet> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
-                        alignment: Alignment.topCenter,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  "Date",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black),
+                                )),
                             Container(
                               margin: EdgeInsets.only(top: 15, bottom: 30),
                               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -90,7 +100,16 @@ class _DietState extends State<Diet> {
                                 ],
                               ),
                             ),
-                            Text("Diet History"),
+                            Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  "Diet History",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black),
+                                )),
 
                             // HEYYEYAAEYAAAEYAEYAA
                             buildFoodList(),
@@ -99,7 +118,7 @@ class _DietState extends State<Diet> {
                       ),
               ],
             ),
-            // searchFood(),
+            searchFood(),
           ],
         ));
   }
@@ -122,9 +141,8 @@ class _DietState extends State<Diet> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return ActivityServices.loadings();
             }
-            print(snapshot.toString());
-
             return new ListView(
+              padding: EdgeInsets.zero,
               children: snapshot.data.docs.map((DocumentSnapshot doc) {
                 Food foods;
                 //cara 1
@@ -155,7 +173,7 @@ class _DietState extends State<Diet> {
   ListView _foodListView(foods) {
     return ListView.builder(
         itemCount: foods.length,
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           return FoodCard(food: foods[index]);
         });
@@ -221,24 +239,24 @@ class _DietState extends State<Diet> {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Material(
-            child: Expanded(
-              child: SizedBox(
-                height:
-                    searchName != "" ? MediaQuery.of(context).size.height : 0,
-                child: FutureBuilder<List<Food>>(
-                  future: SpoonServices.searchFood(searchName),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<Food> foods = snapshot.data;
-                      return _foodListView(foods);
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-                    return Text("Loading...");
-                  },
+            child: Expanded(child: null
+                // SizedBox(
+                //   height:
+                //       searchName != "" ? MediaQuery.of(context).size.height : 0,
+                //   child: FutureBuilder<List<Food>>(
+                //     future: SpoonServices.searchFood(searchName),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         List<Food> foods = snapshot.data;
+                //         return _foodListView(foods);
+                //       } else if (snapshot.hasError) {
+                //         return Text("${snapshot.error}");
+                //       }
+                //       return Text("Loading...");
+                //     },
+                //   ),
+                // ),
                 ),
-              ),
-            ),
           ),
         );
       },

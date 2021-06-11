@@ -34,12 +34,22 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        alignment: Alignment.center,
-        child: Image.asset(
-          "assets/images/logo.png",
-          height: 275,
-        ),
-      ),
+          alignment: Alignment.center,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Image.asset(
+              "assets/images/logo.png",
+              height: 275,
+            ),
+            Text(
+              "Hils",
+              style: TextStyle(
+                  fontSize: 100,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white),
+              maxLines: 1,
+              softWrap: true,
+            ),
+          ])),
     );
   }
 }

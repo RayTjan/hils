@@ -89,11 +89,18 @@ class _TimerCountState extends State<TimerCount> {
                   begin: FractionalOffset(0.5, 1))),
           width: double.infinity,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 50.0),
+                padding: EdgeInsets.only(top: 100.0),
+              ),
+              Text(
+                "TIMER",
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white),
               ),
               Expanded(
                 child: CircularPercentIndicator(
@@ -111,7 +118,7 @@ class _TimerCountState extends State<TimerCount> {
                 ),
               ),
               SizedBox(
-                height: 30.0,
+                height: 50.0,
               ),
               Expanded(
                 child: Container(
@@ -146,7 +153,7 @@ class _TimerCountState extends State<TimerCount> {
                             shape: CircleBorder(),
                           ),
                           SizedBox(
-                            width: 80,
+                            width: 60,
                           ),
                           RawMaterialButton(
                             onPressed: () {
@@ -167,7 +174,7 @@ class _TimerCountState extends State<TimerCount> {
                         ],
                       )),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -184,11 +191,13 @@ class _TimerCountState extends State<TimerCount> {
                           ),
                           child: Padding(
                             padding: EdgeInsets.only(
-                                left: 100, right: 100, top: 20, bottom: 20),
-                            child: Icon(
-                              btnState ? Icons.stop : Icons.play_arrow,
-                              size: 50.0,
-                              color: Colors.white,
+                                left: 80, right: 80, top: 10, bottom: 10),
+                            child: Text(
+                              btnState ? "Stop" : "Start",
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white),
                             ),
                           ),
                         ),

@@ -10,7 +10,7 @@ class MyTheme {
       accentColor: Colors.green[600],
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.light,
-      fontFamily: GoogleFonts.lato().fontFamily,
+      fontFamily: GoogleFonts.jua().fontFamily,
     );
   }
 
@@ -24,7 +24,7 @@ class MyTheme {
       accentColor: Colors.green[600],
       visualDensity: VisualDensity.adaptivePlatformDensity,
       brightness: Brightness.dark,
-      fontFamily: GoogleFonts.lato().fontFamily,
+      fontFamily: GoogleFonts.jua().fontFamily,
     );
   }
 }

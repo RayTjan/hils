@@ -45,4 +45,12 @@ class DietServices {
 
     return hsl;
   }
+
+  static void getSummary() {
+    final firestoreInstance = FirebaseFirestore.instance;
+    firestoreInstance
+        .collection("DietPlan")
+        .get()
+        .then((value) => print(value.toString()));
+  }
 }

@@ -76,7 +76,7 @@ class ActivityServices {
       color: Colors.black26,
       child: SpinKitFadingCircle(
         size: 50,
-        color: Colors.deepPurple,
+        color: Colors.green[800],
       ),
     );
   }

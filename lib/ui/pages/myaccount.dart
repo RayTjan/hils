@@ -36,7 +36,7 @@ class _MyAccountState extends State<MyAccount> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return ActivityServices.loadings();
                 }
-
+                DietServices.getSummary();
                 return new ListView(
                   children: snapshot.data.docs.map((DocumentSnapshot doc) {
                     Users users;
