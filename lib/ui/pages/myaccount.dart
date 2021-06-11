@@ -14,13 +14,6 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Colors.green[800],
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        centerTitle: true,
-      ),
       body: Stack(
         children: [
           Container(
@@ -131,69 +124,6 @@ class _MyAccountState extends State<MyAccount> {
           isLoading == true ? ActivityServices.loadings() : Container()
         ],
       ),
-    );
-  }
-}
-
-class ProfilePic extends StatefulWidget {
-  const ProfilePic({
-    Key key,
-    this.img,
-    this.name,
-  }) : super(key: key);
-
-  final String img;
-  final String name;
-
-  @override
-  _ProfilePicState createState() => _ProfilePicState();
-}
-
-class _ProfilePicState extends State<ProfilePic> {
-  PickedFile imageFile;
-  final ImagePicker imagePicker = ImagePicker();
-
-  Future chooseFile(String type) async {
-    ImageSource imgSrc;
-    if (type == "camera") {
-      imgSrc = ImageSource.camera;
-    } else {
-      imgSrc = ImageSource.gallery;
-    }
-
-    final selectedImage = await imagePicker.getImage(
-      source: imgSrc,
-      imageQuality: 50,
-    );
-    setState(() {
-      imageFile = selectedImage;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 150,
-          width: 150,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              CircleAvatar(
-                backgroundImage: widget.img == "assets/images/defaultUser.png"
-                    ? AssetImage(widget.img)
-                    : NetworkImage(widget.img),
-              ),
-            ],
-          ),
-        ),
-        Text(
-          widget.name,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black),
-        )
-      ],
     );
   }
 }

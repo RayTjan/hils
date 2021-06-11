@@ -21,106 +21,121 @@ class _DietState extends State<Diet> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            SizedBox(height: 100000),
-            Stack(
-              children: [
-                searchin
-                    ? null
-                    : Container(
-                        padding: const EdgeInsets.only(top: 100.0),
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(left: 15),
-                                child: Text(
-                                  "Date",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                )),
-                            Container(
-                              margin: EdgeInsets.only(top: 15, bottom: 30),
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 3, false),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 3, false),
-                                      false),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 2, false),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 2, false),
-                                      false),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 1, false),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 1, false),
-                                      false),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 0, true),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 0, true),
-                                      true),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 1, true),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 1, true),
-                                      false),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 2, true),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 2, true),
-                                      false),
-                                  buildDateColumn(
-                                      ActivityServices.getDayNameBeforeAndAfter(
-                                          dateLoc, 3, true),
-                                      ActivityServices.getDayBeforeAndAfter(
-                                          day, 3, true),
-                                      false),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(left: 15),
-                                child: Text(
-                                  "Diet History",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                )),
-
-                            // HEYYEYAAEYAAAEYAEYAA
-                            buildFoodList(),
-                          ],
-                        ),
-                      ),
-              ],
+        body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/greenTri.png"),
+                fit: BoxFit.cover,
+              ),
             ),
-            searchFood(),
-          ],
-        ));
+            child: Stack(
+              children: [
+                SizedBox(height: 100000),
+                Stack(
+                  children: [
+                    searchin
+                        ? null
+                        : Container(
+                            padding: const EdgeInsets.only(top: 100.0),
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "Date",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
+                                    )),
+                                Container(
+                                  margin: EdgeInsets.only(top: 15, bottom: 30),
+                                  padding: EdgeInsets.symmetric(horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 3, false),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 3, false),
+                                          false),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 2, false),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 2, false),
+                                          false),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 1, false),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 1, false),
+                                          false),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 0, true),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 0, true),
+                                          true),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 1, true),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 1, true),
+                                          false),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 2, true),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 2, true),
+                                          false),
+                                      buildDateColumn(
+                                          ActivityServices
+                                              .getDayNameBeforeAndAfter(
+                                                  dateLoc, 3, true),
+                                          ActivityServices.getDayBeforeAndAfter(
+                                              day, 3, true),
+                                          false),
+                                    ],
+                                  ),
+                                ),
+
+                                Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      "Diet History",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
+                                    )),
+
+                                // HEYYEYAAEYAAAEYAEYAA
+                                buildFoodList(),
+                              ],
+                            ),
+                          ),
+                  ],
+                ),
+                searchFood(),
+              ],
+            )));
   }
 
   Widget buildFoodList() {
@@ -161,22 +176,13 @@ class _DietState extends State<Diet> {
                   doc.data()['proteinUnit'],
                 );
                 // }
-                return DietCard(food: foods);
+                return DietCard(food: foods, date: doc.data()['timeAdded']);
               }).toList(),
             );
           },
         ),
       ),
     );
-  }
-
-  ListView _foodListView(foods) {
-    return ListView.builder(
-        itemCount: foods.length,
-        padding: EdgeInsets.zero,
-        itemBuilder: (context, index) {
-          return FoodCard(food: foods[index]);
-        });
   }
 
   Container buildDateColumn(String weekDay, int date, bool isActive) {

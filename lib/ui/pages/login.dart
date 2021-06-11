@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
                         },
                         child: Text("Not registered yet? Join now.",
                             style: TextStyle(
-                              color: Colors.deepPurple[400],
+                              color: Colors.green[600],
                               fontSize: 16,
                             )),
                       ),
