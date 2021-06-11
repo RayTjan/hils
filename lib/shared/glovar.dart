@@ -7,7 +7,7 @@ class Glovar {
   static String apiKey = "a22cdb16a983490a97bf653c3e8d9e30";
 
   static String baseUrl = "https://api.spoonacular.com";
-  static String guestPic = "assets/images/defaultUser.png";
+  static String guestPic = "assets/images/defaultUser.jpg";
   static List<String> days = [
     'Monday',
     'Tuesday',

@@ -15,14 +15,12 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-        centerTitle: true,
-        elevation: 0,
-      ),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
         height: double.infinity,
         padding: EdgeInsets.all(10),
         child: Stack(
@@ -33,6 +31,16 @@ class _LoginState extends State<Login> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "LOGIN",
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xff70b84d)),
+                      ),
                       Image.asset(
                         "assets/images/loogWhite.png",
                         height: 275,
@@ -126,7 +134,7 @@ class _LoginState extends State<Login> {
                         icon: Icon(Icons.login_rounded),
                         label: Text("Login"),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.deepPurple[400],
+                          primary: Colors.green[800],
                           elevation: 5,
                         ),
                       ),

@@ -43,10 +43,7 @@ class AuthServices extends ChangeNotifier {
     auth.signOut();
 
     if (userCollection.doc != null) {
-      ref = FirebaseStorage.instance
-          .ref()
-          .child("images")
-          .child(userDoc.id + ".png");
+      ref = FirebaseStorage.instance.ref().child("images").child(uid + ".png");
       uploadTask = ref.putFile(File(imgFile.path));
 
       await uploadTask.whenComplete(() => ref.getDownloadURL().then(

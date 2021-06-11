@@ -64,16 +64,16 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register'),
-        centerTitle: true,
-        elevation: 0,
-      ),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
         height: double.infinity,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             ListView(
               padding: EdgeInsets.all(10),
@@ -82,8 +82,21 @@ class _RegisterState extends State<Register> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        "LOGIN",
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xff70b84d)),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       imageFile == null
-                          ? Row(
+                          ? Column(
                               children: [
                                 ElevatedButton.icon(
                                   onPressed: () async {
@@ -102,8 +115,16 @@ class _RegisterState extends State<Register> {
                                 )
                               ],
                             )
-                          : Row(
+                          : Column(
                               children: [
+                                Semantics(
+                                    child: Image.file(
+                                  File(imageFile.path),
+                                  width: 100,
+                                )),
+                                SizedBox(
+                                  width: 16,
+                                ),
                                 ElevatedButton.icon(
                                   onPressed: () async {
                                     // chooseFile();
@@ -112,14 +133,6 @@ class _RegisterState extends State<Register> {
                                   label: Text("Ambil Foto"),
                                   icon: Icon(Icons.photo_album),
                                 ),
-                                SizedBox(
-                                  width: 16,
-                                ),
-                                Semantics(
-                                    child: Image.file(
-                                  File(imageFile.path),
-                                  width: 100,
-                                ))
                               ],
                             ),
                       SizedBox(
@@ -238,7 +251,7 @@ class _RegisterState extends State<Register> {
                         icon: Icon(Icons.save),
                         label: Text("Register"),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.deepPurple[400],
+                          primary: Colors.green[800],
                           elevation: 5,
                         ),
                       ),
@@ -252,7 +265,7 @@ class _RegisterState extends State<Register> {
                         },
                         child: Text("Have an account already? Login now.",
                             style: TextStyle(
-                              color: Colors.deepPurple[400],
+                              color: Colors.green[400],
                               fontSize: 16,
                             )),
                       ),

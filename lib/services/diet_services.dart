@@ -46,11 +46,25 @@ class DietServices {
     return hsl;
   }
 
-  static void getSummary() {
-    final firestoreInstance = FirebaseFirestore.instance;
-    firestoreInstance
-        .collection("DietPlan")
-        .get()
-        .then((value) => print(value.toString()));
+  static List getSummary() {
+    int carb = 0;
+    int calory = 0;
+    int fat = 0;
+    int protein = 0;
+    FirebaseFirestore.instance.collection('DietPlan').get().then((value) => {
+          if (value.docs.length == 0)
+            {print("Nothing")}
+          else
+            {
+              value.docs.forEach((element) {
+                carb += int.parse(element.data()['Carbs']);
+                calory += int.parse(element.data()['calories']);
+                fat += int.parse(element.data()['Fat']);
+                protein += int.parse(element.data()['protein']);
+              })
+            }
+        });
+
+    return [carb, calory, fat, protein];
   }
 }
