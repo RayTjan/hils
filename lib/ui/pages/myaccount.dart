@@ -30,10 +30,7 @@ class _MyAccountState extends State<MyAccount> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
-                  return ProfilePic(
-                    img: "assets/images/defaultUser.png",
-                    name: "none",
-                  );
+                  print(snapshot.error);
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -71,6 +68,18 @@ class _MyAccountState extends State<MyAccount> {
                         ),
                         Text(
                           (users.name != null) ? users.name : "Loading...",
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: GoogleFonts.righteous().fontFamily,
+                            fontSize: 25,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                        Text(
+                          (users.email != null) ? users.email : "Loading...",
                           maxLines: 1,
                           overflow: TextOverflow.fade,
                           softWrap: false,

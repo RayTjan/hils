@@ -11,164 +11,100 @@ class _DietState extends State<Diet> {
   String year = ActivityServices.dateNow().substring(0, 4);
   int day = int.parse(ActivityServices.dateNow().substring(8, 10));
   int dateLoc = ActivityServices.getDateLocation();
-
-  // @override
-  // void initState() async {
-  //   await SpoonServices.searchFood("burger").then((foods) => {
-  //         foodList = foods,
-  //       });
-  // }
-
-  void getFoods() async {
-    await SpoonServices.searchFood("burger").then((foods) => {
-          foodList = foods,
-        });
-  }
-
+  String userName = AuthServices.getName();
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      getFoods();
-    });
     return Scaffold(
-        //error when you call the API, the page just doesnt load for some reaosn
-        appBar: AppBar(
-          title: Text(
-            'List Data',
-          ),
-          centerTitle: true,
-        ),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-              alignment: Alignment.topCenter,
-              color: Color(0xFFF0F0F0),
-              height: MediaQuery.of(context).size.height,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+            searchBarUI(),
+            Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 100.0),
+                  alignment: Alignment.topCenter,
+                  child: Column(
                     children: [
-                      Icon(Icons.calendar_today, color: Colors.grey),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                            text: ActivityServices.getDateName('MMMM'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0XFF263064),
-                              fontSize: 22,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: year,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ]),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "Today",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0XFF3E3993),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-              top: 100,
-              child: Container(
-                height: MediaQuery.of(context).size.height - 160,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 30),
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 3, false),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 3, false),
-                              false),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 2, false),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 2, false),
-                              false),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 1, false),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 1, false),
-                              false),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 0, true),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 0, true),
-                              true),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 1, true),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 1, true),
-                              false),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 2, true),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 2, true),
-                              false),
-                          buildDateColumn(
-                              ActivityServices.getDayNameBeforeAndAfter(
-                                  dateLoc, 3, true),
-                              ActivityServices.getDayBeforeAndAfter(
-                                  day, 3, true),
-                              false),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24),
-                    Expanded(
-                      child: SizedBox(
-                        height: 200.0,
-                        child: FutureBuilder<List<Food>>(
-                          future: SpoonServices.searchFood("burger"),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              List<Food> foods = snapshot.data;
-                              return _foodListView(foods);
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
-                            }
-                            return CircularProgressIndicator();
-                          },
+                      Container(
+                        margin: EdgeInsets.only(top: 15, bottom: 30),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 3, false),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 3, false),
+                                false),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 2, false),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 2, false),
+                                false),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 1, false),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 1, false),
+                                false),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 0, true),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 0, true),
+                                true),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 1, true),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 1, true),
+                                false),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 2, true),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 2, true),
+                                false),
+                            buildDateColumn(
+                                ActivityServices.getDayNameBeforeAndAfter(
+                                    dateLoc, 3, true),
+                                ActivityServices.getDayBeforeAndAfter(
+                                    day, 3, true),
+                                false),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      // HEYYEYAAEYAAAEYAEYAA
+
+                      Image.asset(
+                        "assets/images/loogWhite.png",
+                        height: 275,
+                      ),
+                      // Expanded(
+                      //   child: SizedBox(
+                      //     height: 200.0,
+                      //     child: FutureBuilder<List<Food>>(
+                      //       future: SpoonServices.searchFood("burger"),
+                      //       builder: (context, snapshot) {
+                      //         if (snapshot.hasData) {
+                      //           List<Food> foods = snapshot.data;
+                      //           return _foodListView(foods);
+                      //         } else if (snapshot.hasError) {
+                      //           return Text("${snapshot.error}");
+                      //         }
+                      //         return CircularProgressIndicator();
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ));
   }
@@ -186,7 +122,7 @@ class _DietState extends State<Diet> {
     return Container(
       decoration: isActive
           ? BoxDecoration(
-              color: Color(0xff402fcc), borderRadius: BorderRadius.circular(10))
+              color: Colors.green[800], borderRadius: BorderRadius.circular(10))
           : BoxDecoration(),
       height: 55,
       width: 35,
@@ -205,6 +141,64 @@ class _DietState extends State<Diet> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget searchBarUI() {
+    return FloatingSearchBar(
+      hint: 'Search.....',
+      openAxisAlignment: 0.0,
+      openWidth: 600,
+      axisAlignment: 0.0,
+      scrollPadding: EdgeInsets.only(top: 16, bottom: 20),
+      physics: BouncingScrollPhysics(),
+      onQueryChanged: (query) {
+        //Your methods will be here
+      },
+      automaticallyImplyDrawerHamburger: false,
+      transitionCurve: Curves.easeInOut,
+      transitionDuration: Duration(milliseconds: 500),
+      transition: CircularFloatingSearchBarTransition(),
+      debounceDelay: Duration(milliseconds: 500),
+      actions: [
+        FloatingSearchBarAction(
+          showIfOpened: false,
+          child: CircularButton(
+            icon: Icon(Icons.place),
+            onPressed: () {
+              print('Places Pressed');
+            },
+          ),
+        ),
+        FloatingSearchBarAction.searchToClear(
+          showIfClosed: false,
+        ),
+      ],
+      builder: (context, transition) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Material(
+            color: Colors.green[80],
+            child: Expanded(
+              child: SizedBox(
+                height: 200.0,
+                child: FutureBuilder<List<Food>>(
+                  future: SpoonServices.searchFood("burger"),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Food> foods = snapshot.data;
+                      return _foodListView(foods);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

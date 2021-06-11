@@ -86,6 +86,10 @@ class AuthServices extends ChangeNotifier {
     return msg;
   }
 
+  static String getName() {
+    return auth.currentUser.displayName;
+  }
+
   static Future<bool> signOut() async {
     await Firebase.initializeApp();
     String dateNow = ActivityServices.dateNow();
